@@ -1,54 +1,37 @@
-local fn = vim.fn
 
--- Automatically install packer
-local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then
-  PACKER_BOOTSTRAP = fn.system {
+
+-- Lazy loading and installing
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  vim.fn.system({
     "git",
     "clone",
-    "--depth",
-    "1",
-    "https://github.com/wbthomason/packer.nvim",
-    install_path,
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+-- which-key
+local which_key_table = {
+  "folke/which-key.nvim",
+  event = "VeryLazy",
+  init = function()
+    vim.o.timeout = true
+    vim.o.timeoutlen = 300
+  end,
+  opts = {
+    window = {
+        border = "single", -- none, single, double, shadow
+        position = "top", -- bottom, top
+        winblend = 20, -- value between 0-100 0 for fully opaque and 100 for fully transparent
+      },
   }
-  print "Installing packer close and reopen Neovim..."
-  vim.cmd [[packadd packer.nvim]]
-end
-
--- Autocommand that reloads neovim whenever you save the plugins.lua file
-vim.cmd [[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerSync
-  augroup end
-]]
-
--- Use a protected call so we don't error out on first use
-local status_ok, packer = pcall(require, "packer")
-if not status_ok then
-  return
-end
-
--- Have packer use a popup window
-packer.init {
-  display = {
-    open_fn = function()
-      return require("packer.util").float { border = "rounded" }
-    end,
-  },
 }
 
--- Install your plugins here
-return packer.startup(function(use)
-  -- My plugins here
-  use "wbthomason/packer.nvim" -- Have packer manage itself
-  use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
-  use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
-  use "rstacruz/vim-closer"
+require("lazy").setup({
+  which_key_table
+})
 
-  -- Automatically set up your configuration after cloning packer.nvim
-  -- Put this at the end after all plugins
-  if PACKER_BOOTSTRAP then
-    require("packer").sync()
-  end
-end)
