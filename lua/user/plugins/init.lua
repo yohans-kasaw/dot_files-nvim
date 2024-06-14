@@ -17,9 +17,9 @@ require("lazy").setup({
     require("user.plugins.which_key"),
     require("user.plugins.oceanic_next"),
     require("user.plugins.treesitter"),
+    require("user.plugins.nvim_ts_autotag"),
     {"nvim-treesitter/nvim-treesitter-refactor"},
     {"nvim-treesitter/nvim-treesitter-textobjects"},
-    {"nvim-treesitter/nvim-treesitter-context"},
     {"HiPhish/rainbow-delimiters.nvim"},
+    {"folke/twilight.nvim"},
 })
-
