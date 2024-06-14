@@ -2,4 +2,4 @@ require "user.options"
 -- require "user.keymaps"
 require "user.plugins"
 
- vim.health.report_start()
+vim.g.airline_theme = 'oceanicnext'

@@ -15,6 +15,11 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
     require("user.plugins.which_key"),
-    -- require("user.plugins.tokyonight"),
+    require("user.plugins.oceanic_next"),
+    require("user.plugins.treesitter"),
+    {"nvim-treesitter/nvim-treesitter-refactor"},
+    {"nvim-treesitter/nvim-treesitter-textobjects"},
+    {"nvim-treesitter/nvim-treesitter-context"},
+    {"HiPhish/rainbow-delimiters.nvim"},
 })
 
