@@ -22,4 +22,5 @@ require("lazy").setup({
     {"nvim-treesitter/nvim-treesitter-textobjects"},
     {"HiPhish/rainbow-delimiters.nvim"},
     {"folke/twilight.nvim"},
+    {"neovim/nvim-lspconfig"},
 })
