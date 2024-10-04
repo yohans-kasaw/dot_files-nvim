@@ -9,11 +9,12 @@ return {
           auto_install = true,
           highlight = { enable = true},
           indent = { enable = true },  
-          incremental_selection = {enable = true,
+          incremental_selection = {
+            enable = true,
             keymaps = {
               init_selection = "<C-CR>",
               node_incremental = "<C-CR>",
-              scope_incremental = false,
+              -- scope_incremental = "<C-CR>",
               node_decremental = "<bs>",
             },
           },
@@ -32,6 +33,8 @@ return {
             keymaps = {
               ["af"] = "@function.outer",
               ["if"] = "@function.inner",
+              ["ab"] = "@block.outer",
+              ["ib"] = "@block.inner",
             },
           },
           move = {
