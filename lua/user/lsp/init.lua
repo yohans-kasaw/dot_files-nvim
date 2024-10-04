@@ -3,6 +3,7 @@ require("user.lsp.rust")
 require("user.lsp.go")
 require("user.lsp.typescript")
 require("user.lsp.dart")
+require("user.lsp.lua-language-server")
 
 
 function show_diagnostics()

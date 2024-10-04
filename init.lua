@@ -8,7 +8,6 @@ require("user.cmp")
 require("user.nvim_tree")
 require("user.keymaps")
 require("user.telescope")
-
 vim.opt.signcolumn = "yes"
 vim.g.airline_theme = "oceanicnext"
 vim.opt.completeopt = { "menu", "menuone", "noselect", "noinsert" }
@@ -45,7 +44,6 @@ function RunCodeOnFiletype()
 end
 
 vim.api.nvim_set_keymap("n", "<F5>", ":Copilot disable <CR>", { noremap = true, silent = true })
-
 
 
 
