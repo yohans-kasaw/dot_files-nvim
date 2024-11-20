@@ -1,8 +1,7 @@
 vim.g.mapleader = " "
 vim.api.nvim_set_keymap("n", "<leader>e", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap("n", "<F5>", ":Copilot toggle<CR>", { noremap = true, silent = true })
---vim.api.nvim_set_keymap("i", "<A-h>", 'copilot#Accept("<CR>")', { expr = true, silent = true })
+-- vim.api.nvim_set_keymap("n", "<F5>", ":Copilot toggle<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("i", "<A-h>", 'copilot#Accept("<CR>") . "<Esc>"', { expr = true, silent = true })
 
 -- vim.api.nvim_set_keymap("n", "<C-h>", "<C-w>h", { noremap = true, silent = true })

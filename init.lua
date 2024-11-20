@@ -1,3 +1,8 @@
+---call plug#end()
+
+-- used for complition
+vim.api.nvim_set_keymap("n", "<A-d>", "", { noremap = true, silent = true })
+
 Icons = require("user.icons")
 
 require("user.options")
@@ -17,7 +22,7 @@ local function get_run_command(filetype)
 	if filetype == "typescript" then
 		return ":!echo & ts-node %"
 	elseif filetype == "javascript" then
-		return ":!echo & node %"
+		return ":!echo & cat test | node %"
 	elseif filetype == "python" then
 		return ":!echo & cat test | python %"
 	elseif filetype == "go" then
@@ -28,8 +33,8 @@ local function get_run_command(filetype)
 		return ":!echo & dotnet run"
 	elseif filetype == "rust" then
 		return ":! echo && cat test | cargo run --quiet"
-    elseif filetype == "dart" then
-        return ":! echo && cat test | dart %"
+	elseif filetype == "dart" then
+		return ":! echo && cat test | dart %"
 	else
 		return ":!echo & cat %"
 	end
@@ -43,27 +48,30 @@ function RunCodeOnFiletype()
 	vim.api.nvim_command(cmd)
 end
 
-vim.api.nvim_set_keymap("n", "<F5>", ":Copilot disable <CR>", { noremap = true, silent = true })
-
-
-
 local function enable_zen_mode_for_note_files()
-  local file_ext = vim.fn.expand('%:e')
-  if file_ext == "note" then
-    require("zen-mode").toggle()
-  end
+	local file_ext = vim.fn.expand("%:e")
+	if file_ext == "note" then
+		require("zen-mode").toggle()
+	end
 end
 
-
 vim.api.nvim_create_autocmd("BufRead", {
-  pattern = "*.note",
-  callback = enable_zen_mode_for_note_files,
+	pattern = "*.note",
+	callback = enable_zen_mode_for_note_files,
 })
 
 vim.api.nvim_create_autocmd("BufNewFile", {
-  pattern = "*.note",
-  callback = enable_zen_mode_for_note_files,
+	pattern = "*.note",
+	callback = enable_zen_mode_for_note_files,
 })
 
+-- disable copiolet and supermaven
+-- vim.cmd("Copilot disable")
+--
+-- vim.cmd("SupermavenStop")
 
-vim.cmd("colorscheme github_dark_high_contrast")
+vim.cmd("colorscheme sonokai")
+vim.g.sonokai_style = "𝐌𝐚𝐢𝐚"
+-- vim.cmd("colorscheme sonokai")
+-- set relativenumber
+vim.opt.relativenumber = true

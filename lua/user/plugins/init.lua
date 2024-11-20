@@ -1,4 +1,4 @@
--- Lazy loading and installing
+-- azy loading and installing
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	vim.fn.system({
@@ -14,19 +14,19 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	require("user.plugins.which_key"),
-	require("user.plugins.oceanic_next"),
+	--require("user.plugins.oceanic_next"),
 	require("user.plugins.treesitter"),
 	require("user.plugins.nvim_ts_autotag"),
 	require("user.plugins.formater"),
 	require("user.plugins.telescope"),
 	require("user.plugins.lualine"),
-    require("user.plugins.github-theme"),
-    {
-        "lewis6991/gitsigns.nvim",
-        config = function()
-            require("gitsigns").setup()
-        end,
-    },
+	require("user.plugins.github-theme"),
+	{
+		"lewis6991/gitsigns.nvim",
+		config = function()
+			require("gitsigns").setup()
+		end,
+	},
 	{ "nvim-treesitter/nvim-treesitter-refactor" },
 	{ "nvim-treesitter/nvim-treesitter-textobjects" },
 	{ "HiPhish/rainbow-delimiters.nvim" },
@@ -83,42 +83,129 @@ require("lazy").setup({
 		},
 		config = true,
 	},
--- 	{
--- 		"nvimdev/dashboard-nvim",
--- 		event = "VimEnter",
--- 		config = function()
--- 			local logo = [[
---      ██╗ ██████╗         ███████╗ ██████╗ ██████╗  ██████╗███████╗███████╗
---      ██║██╔═══██╗        ██╔════╝██╔═══██╗██╔══██╗██╔════╝██╔════╝██╔════╝
---      ██║██║   ██║        █████╗  ██║   ██║██████╔╝██║     █████╗  ███████╗
--- ██   ██║██║   ██║        ██╔══╝  ██║   ██║██╔══██╗██║     ██╔══╝  ╚════██║
--- ╚█████╔╝╚██████╔╝███████╗██║     ╚██████╔╝██║  ██║╚██████╗███████╗███████║
---  ╚════╝  ╚═════╝ ╚══════╝╚═╝      ╚═════╝ ╚═╝  ╚═╝ ╚═════╝╚══════╝╚══════╝
---
---             ]]
---
--- 			logo = string.rep("\n", 8) .. logo .. "\n\n"
--- 			require("dashboard").setup({
--- 				config = {
--- 					header = vim.split(logo, "\n"), --your header
--- 					footer = {}, --your footer
--- 				},
--- 			})
--- 		end,
--- 		dependencies = { { "nvim-tree/nvim-web-devicons" } },
--- 	},
-    --++++++
-  {
-    "folke/lazydev.nvim",
-    ft = "lua", -- only load on lua files
-    opts = {
-      library = {
-        -- See the configuration section for more details
-        -- Load luvit types when the `vim.uv` word is found
-        { path = "luvit-meta/library", words = { "vim%.uv" } },
-      },
-    },
-  },
-  { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
-}
-)
+	-- 	{
+	-- 		"nvimdev/dashboard-nvim",
+	-- 		event = "VimEnter",
+	-- 		config = function()
+	-- 			local logo = [[
+	--      ██╗ ██████╗         ███████╗ ██████╗ ██████╗  ██████╗███████╗███████╗
+	--      ██║██╔═══██╗        ██╔════╝██╔═══██╗██╔══██╗██╔════╝██╔════╝██╔════╝
+	--      ██║██║   ██║        █████╗  ██║   ██║██████╔╝██║     █████╗  ███████╗
+	-- ██   ██║██║   ██║        ██╔══╝  ██║   ██║██╔══██╗██║     ██╔══╝  ╚════██║
+	-- ╚█████╔╝╚██████╔╝███████╗██║     ╚██████╔╝██║  ██║╚██████╗███████╗███████║
+	--  ╚════╝  ╚═════╝ ╚══════╝╚═╝      ╚═════╝ ╚═╝  ╚═╝ ╚═════╝╚══════╝╚══════╝
+	--
+	--             ]]
+	--
+	-- 			logo = string.rep("\n", 8) .. logo .. "\n\n"
+	-- 			require("dashboard").setup({
+	-- 				config = {
+	-- 					header = vim.split(logo, "\n"), --your header
+	-- 					footer = {}, --your footer
+	-- 				},
+	-- 			})
+	-- 		end,
+	-- 		dependencies = { { "nvim-tree/nvim-web-devicons" } },
+	-- 	},
+	--++++++
+	{
+		"folke/lazydev.nvim",
+		ft = "lua", -- only load on lua files
+		opts = {
+			library = {
+				-- See the configuration section for more details
+				-- Load luvit types when the `vim.uv` word is found
+				{ path = "luvit-meta/library", words = { "vim%.uv" } },
+			},
+		},
+	},
+	{ "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
+	-- {
+	-- 	"supermaven-inc/supermaven-nvim",
+	-- 	config = function()
+	-- 		require("supermaven-nvim").setup({
+	-- 			keymaps = {
+	-- 				accept_suggestion = "<A-h>",
+	-- 			},
+	-- 			color = {
+	-- 				--suggestion_color = "#A9A9A9",
+	-- 				cterm = 244,
+	-- 			},
+	-- 			log_level = "info", -- set to "off" to disable logging completely
+	-- 			disable_inline_completion = false, -- disables inline completion for use with cmp
+	-- 			disable_keymaps = false, -- disables built in keymaps for more manual control
+	-- 			condition = function()
+	-- 				return false
+	-- 			end, -- condition to check for stopping supermaven, `true` means to stop supermaven when the condition is true.
+	-- 		})
+	-- 	end,
+	-- },
+	{
+		"sainnhe/sonokai",
+		lazy = false, -- ensure it loads immediately
+		priority = 1000, -- make it load before other plugins
+		-- config = function()
+		-- 	vim.cmd("colorscheme sonokai")
+		-- end,
+	},
+	{
+		{
+			"akinsho/toggleterm.nvim",
+			version = "*",
+			opts = {--[[ things you want to change go here]]
+			},
+			config = function()
+				require("toggleterm").setup({
+					size = vim.o.columns * 0.4,
+					open_mapping = [[<C-Space>]],
+					hide_numbers = true,
+					shade_filetypes = {},
+					shade_terminals = true,
+					shading_factor = 2,
+					start_in_insert = true,
+					insert_mappings = true,
+					persist_size = true,
+					direction = "vertical",
+					close_on_exit = true,
+					shell = vim.o.shell,
+					float_opts = {
+						border = "curved",
+						winblend = 0,
+						highlights = {
+							border = "Normal",
+							background = "Normal",
+						},
+					},
+				})
+			end,
+		},
+	},
+	{
+		"ggandor/leap.nvim",
+		config = function()
+			require("leap").add_default_mappings()
+			vim.keymap.set("n", "s", "<Plug>(leap)")
+			vim.keymap.set("n", "S", "<Plug>(leap-from-window)")
+			vim.keymap.set({ "x", "o" }, "s", "<Plug>(leap-forward)")
+			vim.keymap.set({ "x", "o" }, "S", "<Plug>(leap-backward)")
+		end,
+	},
+	{
+		"lukas-reineke/indent-blankline.nvim",
+		main = "ibl",
+		---@module "ibl"
+		---@type ibl.config
+		opts = {},
+	},
+	{
+		"luckasRanarison/tailwind-tools.nvim",
+		name = "tailwind-tools",
+		build = ":UpdateRemotePlugins",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-telescope/telescope.nvim", -- optional
+			"neovim/nvim-lspconfig", -- optional
+		},
+		opts = {}, -- your configuration
+	},
+})
