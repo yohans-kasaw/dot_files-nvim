@@ -75,3 +75,5 @@ vim.g.sonokai_style = "𝐌𝐚𝐢𝐚"
 -- vim.cmd("colorscheme sonokai")
 -- set relativenumber
 vim.opt.relativenumber = true
+-- enable Tailwind conceal
+vim.cmd("TailwindConcealEnable")

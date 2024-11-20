@@ -208,4 +208,37 @@ require("lazy").setup({
 		},
 		opts = {}, -- your configuration
 	},
+	{
+		"razak17/tailwind-fold.nvim",
+		opts = {},
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		ft = { "html", "svelte", "astro", "vue", "typescriptreact", "php", "blade" },
+	},
+	{
+		"laytan/tailwind-sorter.nvim",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter", -- Provides better parsing for various languages
+			"nvim-lua/plenary.nvim", -- Required for utility functions
+		},
+		build = "cd formatter && npm ci && npm run build", -- Build command for the plugin
+		config = function()
+			require("tailwind-sorter").setup({
+				on_save_enabled = true, -- Automatically sort on save if true
+				on_save_pattern = { -- File patterns to watch and sort
+					"*.html",
+					"*.js",
+					"*.jsx",
+					"*.ts",
+					"*.tsx",
+					"*.twig",
+					"*.hbs",
+					"*.php",
+					"*.heex",
+					"*.astro",
+				},
+				node_path = "node", -- Path to the Node.js executable
+				trim_spaces = true, -- Trim extra spaces after sorting if true
+			})
+		end,
+	},
 })
