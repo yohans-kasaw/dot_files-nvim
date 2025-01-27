@@ -93,9 +93,9 @@ cmp.setup({
 		{ { name = "path" } },
 		-- {{ name = 'cmdline' },},
 		{ { name = "lazydev", group_index = 0 } },
-		{ { name = "treesitter" } },
+		{ { name = "treesitter" } }
 		-- {{name = 'supermaven'}}
-		{ { name = "copilot" } }
+		-- { { name = "copilot" } }
 	),
 })
 

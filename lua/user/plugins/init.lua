@@ -14,7 +14,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	require("user.plugins.which_key"),
-	--require("user.plugins.oceanic_next"),
 	require("user.plugins.treesitter"),
 	require("user.plugins.nvim_ts_autotag"),
 	require("user.plugins.formater"),
@@ -25,6 +24,7 @@ require("lazy").setup({
 		"lewis6991/gitsigns.nvim",
 		config = function()
 			require("gitsigns").setup()
+			require("scrollbar.handlers.gitsigns").setup()
 		end,
 	},
 	{ "nvim-treesitter/nvim-treesitter-refactor" },
@@ -33,7 +33,6 @@ require("lazy").setup({
 	{ "folke/twilight.nvim" },
 	{ "neovim/nvim-lspconfig" },
 	{ "nvim-tree/nvim-tree.lua" },
-	{ "github/copilot.vim" },
 	{ "folke/zen-mode.nvim" },
 
 	-- this are for complitions
@@ -83,31 +82,6 @@ require("lazy").setup({
 		},
 		config = true,
 	},
-	-- 	{
-	-- 		"nvimdev/dashboard-nvim",
-	-- 		event = "VimEnter",
-	-- 		config = function()
-	-- 			local logo = [[
-	--      ██╗ ██████╗         ███████╗ ██████╗ ██████╗  ██████╗███████╗███████╗
-	--      ██║██╔═══██╗        ██╔════╝██╔═══██╗██╔══██╗██╔════╝██╔════╝██╔════╝
-	--      ██║██║   ██║        █████╗  ██║   ██║██████╔╝██║     █████╗  ███████╗
-	-- ██   ██║██║   ██║        ██╔══╝  ██║   ██║██╔══██╗██║     ██╔══╝  ╚════██║
-	-- ╚█████╔╝╚██████╔╝███████╗██║     ╚██████╔╝██║  ██║╚██████╗███████╗███████║
-	--  ╚════╝  ╚═════╝ ╚══════╝╚═╝      ╚═════╝ ╚═╝  ╚═╝ ╚═════╝╚══════╝╚══════╝
-	--
-	--             ]]
-	--
-	-- 			logo = string.rep("\n", 8) .. logo .. "\n\n"
-	-- 			require("dashboard").setup({
-	-- 				config = {
-	-- 					header = vim.split(logo, "\n"), --your header
-	-- 					footer = {}, --your footer
-	-- 				},
-	-- 			})
-	-- 		end,
-	-- 		dependencies = { { "nvim-tree/nvim-web-devicons" } },
-	-- 	},
-	--++++++
 	{
 		"folke/lazydev.nvim",
 		ft = "lua", -- only load on lua files
@@ -120,26 +94,6 @@ require("lazy").setup({
 		},
 	},
 	{ "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
-	-- {
-	-- 	"supermaven-inc/supermaven-nvim",
-	-- 	config = function()
-	-- 		require("supermaven-nvim").setup({
-	-- 			keymaps = {
-	-- 				accept_suggestion = "<A-h>",
-	-- 			},
-	-- 			color = {
-	-- 				--suggestion_color = "#A9A9A9",
-	-- 				cterm = 244,
-	-- 			},
-	-- 			log_level = "info", -- set to "off" to disable logging completely
-	-- 			disable_inline_completion = false, -- disables inline completion for use with cmp
-	-- 			disable_keymaps = false, -- disables built in keymaps for more manual control
-	-- 			condition = function()
-	-- 				return false
-	-- 			end, -- condition to check for stopping supermaven, `true` means to stop supermaven when the condition is true.
-	-- 		})
-	-- 	end,
-	-- },
 	{
 		"sainnhe/sonokai",
 		lazy = false, -- ensure it loads immediately
@@ -209,36 +163,158 @@ require("lazy").setup({
 		opts = {}, -- your configuration
 	},
 	{
-		"razak17/tailwind-fold.nvim",
-		opts = {},
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		ft = { "html", "svelte", "astro", "vue", "typescriptreact", "php", "blade" },
+		"rcarriga/nvim-notify",
+		config = function()
+			require("notify").setup({
+				-- Other configuration options...
+				top_down = false,
+			})
+		end,
 	},
 	{
-		"laytan/tailwind-sorter.nvim",
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter", -- Provides better parsing for various languages
-			"nvim-lua/plenary.nvim", -- Required for utility functions
+		"m4xshen/hardtime.nvim",
+		dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+		opts = {
+			showmode = true,
+			max_count = 10,
+			disable_mouse = false,
+			hint = false,
 		},
-		build = "cd formatter && npm ci && npm run build", -- Build command for the plugin
+	},
+	{ "ThePrimeagen/vim-be-good" },
+	{
+		"yamatsum/nvim-cursorline",
 		config = function()
-			require("tailwind-sorter").setup({
-				on_save_enabled = true, -- Automatically sort on save if true
-				on_save_pattern = { -- File patterns to watch and sort
-					"*.html",
-					"*.js",
-					"*.jsx",
-					"*.ts",
-					"*.tsx",
-					"*.twig",
-					"*.hbs",
-					"*.php",
-					"*.heex",
-					"*.astro",
+			require("nvim-cursorline").setup({
+				cursorline = {
+					enable = true,
+					timeout = 1000,
+					number = false,
 				},
-				node_path = "node", -- Path to the Node.js executable
-				trim_spaces = true, -- Trim extra spaces after sorting if true
+				cursorword = {
+					enable = true,
+					min_length = 3,
+					hl = { underline = true },
+				},
 			})
+		end,
+	},
+	{
+		"utilyre/barbecue.nvim",
+		name = "barbecue",
+		version = "*",
+		dependencies = {
+			"SmiteshP/nvim-navic",
+			"nvim-tree/nvim-web-devicons", -- optional dependency
+		},
+		opts = {
+			-- configurations go here
+		},
+	},
+	{
+		"petertriho/nvim-scrollbar",
+		config = function()
+			require("scrollbar").setup()
+		end,
+	},
+	{
+		"kevinhwang91/nvim-hlslens",
+		config = function()
+			-- require("hlslens").setup({})
+			require("scrollbar.handlers.search").setup({
+				-- hlslens config overrides
+			})
+			local kopts = { noremap = true, silent = true }
+
+			vim.api.nvim_set_keymap(
+				"n",
+				"n",
+				[[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
+				kopts
+			)
+			vim.api.nvim_set_keymap(
+				"n",
+				"N",
+				[[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
+				kopts
+			)
+			vim.api.nvim_set_keymap("n", "*", [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+			vim.api.nvim_set_keymap("n", "#", [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+			vim.api.nvim_set_keymap("n", "g*", [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+			vim.api.nvim_set_keymap("n", "g#", [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+
+			vim.api.nvim_set_keymap("n", "<C-n>", "<Cmd>noh<CR>", kopts)
+		end,
+	},
+	{
+		"rebelot/kanagawa.nvim",
+		config = function()
+			require("kanagawa").setup({
+				theme = "dragon",
+			})
+		end,
+	},
+	{
+		"kylechui/nvim-surround",
+		version = "*", -- Use for stability; omit to use `main` branch for the latest features
+		event = "VeryLazy",
+		config = function()
+			require("nvim-surround").setup({
+				-- Configuration here, or leave empty to use defaults
+			})
+		end,
+	},
+	{
+		"renerocksai/telekasten.nvim",
+		dependencies = { "nvim-telescope/telescope.nvim" },
+		config = function()
+			require("telekasten").setup({
+				home = vim.fn.expand("~/zettelkasten"), -- Put the name of your notes directory here
+			})
+		end,
+	},
+	{
+		"epwalsh/obsidian.nvim",
+		tag = "*", -- recommended, use latest release instead of latest commit
+		requires = {
+			-- Required.
+			"nvim-lua/plenary.nvim",
+
+			-- see below for full list of optional dependencies 👇
+		},
+		config = function()
+			require("obsidian").setup({
+				workspaces = {
+					{
+						name = "personal",
+						path = "~/nots",
+					},
+				},
+
+				-- see below for full list of options 👇
+			})
+		end,
+	},
+	{
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		opts = {
+			top_down = false,
+		},
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+			"rcarriga/nvim-notify",
+		},
+	},
+	{
+		"github/copilot.vim",
+		event = "InsertEnter",
+		lazy = false,
+		autoStart = true,
+		config = function()
+			vim.g.copilot_assume_mapped = true
+			vim.api.nvim_set_keymap("i", "<A-h>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
+			vim.g.copilot_no_tab_map = true
 		end,
 	},
 })

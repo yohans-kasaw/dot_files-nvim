@@ -51,7 +51,7 @@ require'nvim-tree'.setup {
     centralize_selection = true,
     width = 30,
     debounce_delay = 15,
-    side = "left",
+    side = "right",
     preserve_window_proportions = false,
     signcolumn = "yes",
   },

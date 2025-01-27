@@ -1,19 +1,26 @@
+
 vim.g.mapleader = " "
+
+local map = vim.api.nvim_set_keymap
+local opts = { noremap = true, silent = false }
+
 vim.api.nvim_set_keymap("n", "<leader>e", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
 
--- vim.api.nvim_set_keymap("n", "<F5>", ":Copilot toggle<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("i", "<A-h>", 'copilot#Accept("<CR>") . "<Esc>"', { expr = true, silent = true })
-
--- vim.api.nvim_set_keymap("n", "<C-h>", "<C-w>h", { noremap = true, silent = true })
--- vim.api.nvim_set_keymap("n", "<C-l>", "<C-w>l", { noremap = true, silent = true })
-
 vim.api.nvim_set_keymap("n", "<leader>o", ":w<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>w", ":w<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>q", ":q!<CR>", { noremap = true, silent = true })
 
 vim.api.nvim_set_keymap("n", "<leader>z", "<cmd>ZenMode<CR>", { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap("n", "<leader>bd", [[:lua CloseOtherBuffers()<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-h>", "<C-w>h", opts)
+vim.api.nvim_set_keymap("n", "<C-j>", "<C-w>j", opts)
+vim.api.nvim_set_keymap("n", "<C-k>", "<C-w>k", opts)
+vim.api.nvim_set_keymap("n", "<C-l>", "<C-w>l", opts)
+vim.api.nvim_set_keymap("n", "<C-v>", ":vsplit<CR>", opts)
+
+vim.api.nvim_set_keymap("n", "ta", [[:lua CloseOtherBuffers()<CR>]], { noremap = true, silent = true })
+map("n", "tn", "<cmd>bnext<CR>", opts)
+map("n", "th", "<cmd>bprev<CR>", opts)
+map("n", "td", "<cmd>bd<CR>", opts)
 function CloseOtherBuffers()
 	local current_buf = vim.api.nvim_get_current_buf()
 	local buffers = vim.api.nvim_list_bufs()
@@ -25,26 +32,17 @@ function CloseOtherBuffers()
 	end
 end
 
---- add formating
---vim.api.nvim_set_keymap('n', '<leader>f', ':lua vim.lsp.buf.formatting()<CR>', { noremap = true, silent = true })
---
-
--- Keymaps for Telescope
-local map = vim.api.nvim_set_keymap
-local opts = { noremap = true, silent = false }
-
 -- Direct Telescope access with 't'
 map("n", "<leader>t", "<cmd>Telescope<CR>", opts) -- Direct Telescope command
 
--- Single letters for most common file operations
 map("n", "<leader>u", "<cmd>Telescope find_files<CR>", opts) -- Find files
+
 map("n", "<leader>g", "<cmd>Telescope live_grep<CR>", opts) -- Live grep
 map("n", "<leader>a", "<cmd>Telescope oldfiles<CR>", opts) -- Recently opened files
 map("n", "<leader>r", "<cmd>Telescope repo list=fd<CR>", opts) -- open repo list
 map("n", "<leader>.", "<cmd>Telescope zoxide list<CR>", opts) -- open repo list
 map("n", "<leader>h", "<cmd>Telescope frecency<CR>", opts) -- open repo list
 map("n", "<leader>c", "<cmd>Telescope project<CR>", opts) -- open repo list
-
 
 -- Other file operations
 map("n", "<leader>sb", "<cmd>Telescope buffers<CR>", opts) -- Buffer list
@@ -68,39 +66,32 @@ map("n", "<leader>gb", "<cmd>Telescope git_branches<CR>", opts)
 map("n", "<leader>gC", "<cmd>Telescope git_bcommits<CR>", opts)
 
 
-
---- spectial function
-function current_directory_oldfiles()
-    local opts = require('telescope.themes').get_dropdown{}  -- Uses dropdown theme, customize as needed
-    require('telescope.builtin').oldfiles({
-        cwd_only = true,  -- Restrict to current working directory
-        prompt_title = 'Old Files in Current Directory',  -- Custom title
-        opts
-    })
+local function get_run_command(filetype)
+	if filetype == "typescript" then
+		return ":!echo & ts-node %"
+	elseif filetype == "javascript" then
+		return ":!echo & cat test | node %"
+	elseif filetype == "python" then
+		return ":!echo & cat test | python %"
+	elseif filetype == "go" then
+		return ":! echo && cat test | go run ."
+	elseif filetype == "lua" then
+		return ":!echo & lua %"
+	elseif filetype == "cs" then
+		return ":!echo & dotnet run"
+	elseif filetype == "rust" then
+		return ":! echo && cat test | cargo run --quiet"
+	elseif filetype == "dart" then
+		return ":! echo && cat test | dart %"
+	else
+		return ":!echo & cat %"
+	end
 end
 
-map("n", "<leader>sc", "<cmd>lua current_directory_oldfiles()<CR>", opts)
--- key map for telescope repo
+vim.api.nvim_set_keymap("n", "<Tab>", ":lua  RunCodeOnFiletype()<CR>", { noremap = true, silent = true })
 
-
--- maps for buffers
--- th and tn for next and previous buffer
-map("n", "tn", "<cmd>bnext<CR>", opts)
-map("n", "th", "<cmd>bprev<CR>", opts)
-map("n", "td", "<cmd>bd<CR>", opts)
-map("n", "ta", "<cmd>bufdo bd<CR>", opts)
-
--- window maps
-map("n", "ss", "<cmd>vs<CR>", opts)
--- map("n", "sh", "<C-w>h", opts)
--- map("n", "st", "<C-w>j", opts)
-
-vim.api.nvim_set_keymap("n", "<C-h>", "<C-w>h", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<C-l>", "<C-w>l", { noremap = true, silent = true })
-
-
--- more 
--- c-a far select all
-map("n", "<C-a>", "gg<S-v>G", opts)
-
-vim.api.nvim_set_keymap('n', '<leader>d', ':cd %:p:h<CR>:pwd<CR>', { noremap = true, silent = true })
+function RunCodeOnFiletype()
+	local filetype = vim.bo.filetype
+	local cmd = get_run_command(filetype)
+	vim.api.nvim_command(cmd)
+end
