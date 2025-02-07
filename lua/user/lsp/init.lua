@@ -16,30 +16,29 @@ require("lspconfig").cssls.setup({
 	capabilities = require("cmp_nvim_lsp").default_capabilities(),
 })
 
-require'lspconfig'.dartls.setup{
-    capabilities = require('cmp_nvim_lsp').default_capabilities()
-}
+require("lspconfig").dartls.setup({
+	capabilities = require("cmp_nvim_lsp").default_capabilities(),
+})
 
-require'lspconfig'.gopls.setup{
-    capabilities = require('cmp_nvim_lsp').default_capabilities()
-}
+require("lspconfig").gopls.setup({
+	capabilities = require("cmp_nvim_lsp").default_capabilities(),
+})
 
+require("lspconfig").lua_ls.setup({
+	capabilities = require("cmp_nvim_lsp").default_capabilities(),
+})
 
-require'lspconfig'.lua_ls.setup{
-    capabilities = require('cmp_nvim_lsp').default_capabilities()
-}
+require("lspconfig").pyright.setup({
+	capabilities = require("cmp_nvim_lsp").default_capabilities(),
+})
 
-require'lspconfig'.pyright.setup{
-    capabilities = require('cmp_nvim_lsp').default_capabilities()
-}
+require("lspconfig").rust_analyzer.setup({
+	capabilities = require("cmp_nvim_lsp").default_capabilities(),
+})
 
-require'lspconfig'.rust_analyzer.setup{
-    capabilities = require('cmp_nvim_lsp').default_capabilities()
-}
-
-require'lspconfig'.ts_ls.setup{
-    capabilities = require('cmp_nvim_lsp').default_capabilities()
-}
+require("lspconfig").ts_ls.setup({
+	capabilities = require("cmp_nvim_lsp").default_capabilities(),
+})
 
 function show_diagnostics()
 	vim.diagnostic.open_float(nil, opts)

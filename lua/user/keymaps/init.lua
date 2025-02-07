@@ -10,7 +10,6 @@ vim.api.nvim_set_keymap("n", "<leader>e", ":NvimTreeToggle<CR>", { noremap = tru
 
 vim.api.nvim_set_keymap("n", "<leader>o", ":w<CR>", { noremap = true, silent = true })
 
-
 vim.api.nvim_set_keymap("n", "<C-h>", "<C-w>h", opts)
 vim.api.nvim_set_keymap("n", "<C-j>", "<C-w>j", opts)
 vim.api.nvim_set_keymap("n", "<C-k>", "<C-w>k", opts)
@@ -50,7 +49,6 @@ map("n", "<leader>li", "<cmd>Telescope lsp_implementations<CR>", opts)
 map("n", "<leader>lt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
 map("n", "<leader>la", "<cmd>Telescope lsp_code_actions<CR>", opts)
 map("n", "<leader>lD", "<cmd>Telescope diagnostics<CR>", opts)
-
 
 local function get_run_command(filetype)
 	if filetype == "typescript" then

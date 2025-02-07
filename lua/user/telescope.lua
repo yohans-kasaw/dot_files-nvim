@@ -9,9 +9,7 @@ local opts = { noremap = true, silent = false }
 
 -- Direct Telescope access with 't'
 map("n", "<leader>t", "<cmd>Telescope<CR>", opts) -- Direct Telescope command
-
 map("n", "<leader>u", "<cmd>Telescope find_files<CR>", opts) -- Find files
-
 map("n", "<leader>g", "<cmd>Telescope live_grep<CR>", opts) -- Live grep
 map("n", "<leader>a", "<cmd>Telescope oldfiles<CR>", opts) -- Recently opened files
 map("n", "<leader>r", "<cmd>Telescope repo list=fd<CR>", opts) -- open repo list

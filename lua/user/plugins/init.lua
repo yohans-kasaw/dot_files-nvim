@@ -13,13 +13,182 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	require("user.plugins.which_key"),
-	require("user.plugins.treesitter"),
-	require("user.plugins.nvim_ts_autotag"),
-	require("user.plugins.formater"),
-	require("user.plugins.telescope"),
-	require("user.plugins.lualine"),
-	require("user.plugins.github-theme"),
+	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		-- lazy = true,
+		init = function()
+			vim.o.timeout = true
+			vim.o.timeoutlen = 300
+		end,
+	},
+	{
+		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate",
+		config = function()
+			local configs = require("nvim-treesitter.configs")
+			configs.setup({
+				ensure_installed = "all",
+				sync_install = false,
+				auto_install = true,
+				highlight = { enable = true },
+				indent = { enable = true },
+				incremental_selection = {
+					enable = true,
+					keymaps = {
+						init_selection = "<C-CR>",
+						node_incremental = "<C-CR>",
+						-- scope_incremental = "<C-CR>",
+						node_decremental = "<bs>",
+					},
+				},
+				refactor = {
+					smart_rename = {
+						enable = true,
+						keymaps = {
+							smart_rename = "grr",
+						},
+					},
+				},
+				textobjects = {
+					select = {
+						enable = true,
+						lookahead = true,
+						keymaps = {
+							["af"] = "@function.outer",
+							["if"] = "@function.inner",
+							["ab"] = "@block.outer",
+							["ib"] = "@block.inner",
+						},
+					},
+					move = {
+						enable = true,
+						set_jumps = true,
+						goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer" },
+						goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer" },
+						goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer" },
+						goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer" },
+					},
+				},
+			})
+		end,
+	},
+	{
+		"mhartington/oceanic-next",
+		lazy = false, -- make sure we load this during startup if it is your main colorscheme
+		priority = 1000, -- make sure to load this before all the other start plugins
+		config = function()
+			vim.cmd([[
+
+        let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+        let g:oceanic_next_terminal_bold = 1
+        let g:oceanic_next_terminal_italic = 1
+
+        if (has("termguicolors"))
+         set termguicolors
+        endif
+        colorscheme OceanicNext
+      ]])
+		end,
+	},
+	{
+		"windwp/nvim-ts-autotag",
+		config = function()
+			require("nvim-ts-autotag").setup({
+				opts = {
+					enable_close = true, -- Auto close tags
+					enable_rename = true, -- Auto rename pairs of tags
+					enable_close_on_slash = false, -- Auto close on trailing </
+				},
+			})
+		end,
+	},
+	{
+		"folke/tokyonight.nvim",
+		lazy = false, -- make sure we load this during startup if it is your main colorscheme
+		priority = 1000, -- make sure to load this before all the other start plugins
+		config = function()
+			vim.cmd([[colorscheme tokyonight]])
+		end,
+	},
+	{
+		"nvim-telescope/telescope.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+			require("telescope").setup({
+				pickers = {
+					find_files = {
+						theme = "dropdown",
+					},
+				},
+			})
+		end,
+	},
+	{
+		"rcarriga/nvim-dap-ui",
+		dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
+	},
+	{
+		"nvim-lualine/lualine.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			require("lualine").setup({
+				options = {
+					icons_enabled = true,
+					theme = "onedark",
+					component_separators = { left = "", right = "" },
+					section_separators = { left = "", right = "" },
+					disabled_filetypes = {
+						statusline = {},
+						winbar = {},
+					},
+					ignore_focus = {},
+					always_divide_middle = true,
+					globalstatus = false,
+					refresh = {
+						statusline = 1000,
+						tabline = 1000,
+						winbar = 1000,
+					},
+				},
+				sections = {
+					lualine_a = { "branch" },
+					lualine_b = { "diff", "diagnostics" },
+					lualine_c = {},
+					lualine_x = { "filetype" },
+					lualine_y = { "progress" },
+					lualine_z = { { "datetime", style = "%H:%M" } },
+				},
+				inactive_sections = {
+					lualine_a = {},
+					lualine_b = {},
+					lualine_c = { "filename" },
+					lualine_x = { "location" },
+					lualine_y = {},
+					lualine_z = {},
+				},
+				tabline = {
+					lualine_a = { "buffers" },
+					lualine_b = {},
+					lualine_c = {},
+					lualine_x = {},
+					lualine_y = {},
+					lualine_z = {},
+				},
+				winbar = {},
+				inactive_winbar = {},
+				extensions = {},
+			})
+		end,
+	},
+	{
+		"projekt0n/github-nvim-theme",
+		lazy = false, -- make sure we load this during startup if it is your main colorscheme
+		priority = 1000, -- make sure to load this before all the other start plugins
+		config = function()
+			require("github-theme").setup({})
+		end,
+	},
 	{
 		"lewis6991/gitsigns.nvim",
 		config = function()
