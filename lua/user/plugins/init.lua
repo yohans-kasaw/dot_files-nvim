@@ -28,8 +28,10 @@ require("lazy").setup({
 		config = function()
 			local configs = require("nvim-treesitter.configs")
 			configs.setup({
+        modules = {},
+        ignore_install = {},
 				ensure_installed = "all",
-				sync_install = false,
+				sync_install = true,
 				auto_install = true,
 				highlight = { enable = true },
 				indent = { enable = true },
@@ -37,9 +39,9 @@ require("lazy").setup({
 					enable = true,
 					keymaps = {
 						init_selection = "<C-CR>",
-						node_incremental = "<C-CR>",
-						-- scope_incremental = "<C-CR>",
-						node_decremental = "<bs>",
+						node_incremental = ".",
+						scope_incremental = "nill",
+						node_decremental = "nill",
 					},
 				},
 				refactor = {
@@ -50,65 +52,7 @@ require("lazy").setup({
 						},
 					},
 				},
-				textobjects = {
-					select = {
-						enable = true,
-						lookahead = true,
-						keymaps = {
-							["af"] = "@function.outer",
-							["if"] = "@function.inner",
-							["ab"] = "@block.outer",
-							["ib"] = "@block.inner",
-						},
-					},
-					move = {
-						enable = true,
-						set_jumps = true,
-						goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer" },
-						goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer" },
-						goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer" },
-						goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer" },
-					},
-				},
 			})
-		end,
-	},
-	{
-		"mhartington/oceanic-next",
-		lazy = false, -- make sure we load this during startup if it is your main colorscheme
-		priority = 1000, -- make sure to load this before all the other start plugins
-		config = function()
-			vim.cmd([[
-
-        let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-        let g:oceanic_next_terminal_bold = 1
-        let g:oceanic_next_terminal_italic = 1
-
-        if (has("termguicolors"))
-         set termguicolors
-        endif
-        colorscheme OceanicNext
-      ]])
-		end,
-	},
-	{
-		"windwp/nvim-ts-autotag",
-		config = function()
-			require("nvim-ts-autotag").setup({
-				opts = {
-					enable_close = true, -- Auto close tags
-					enable_rename = true, -- Auto rename pairs of tags
-					enable_close_on_slash = false, -- Auto close on trailing </
-				},
-			})
-		end,
-	},
-	{
-		"folke/tokyonight.nvim",
-		lazy = false, -- make sure we load this during startup if it is your main colorscheme
-		priority = 1000, -- make sure to load this before all the other start plugins
-		config = function()
-			vim.cmd([[colorscheme tokyonight]])
 		end,
 	},
 	{
