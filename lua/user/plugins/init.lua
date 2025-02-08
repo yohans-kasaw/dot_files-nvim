@@ -98,6 +98,31 @@ require("lazy").setup({
 			require("scrollbar.handlers.gitsigns").setup()
 		end,
 	},
+	{
+		"windwp/nvim-autopairs",
+		config = function()
+			require("nvim-autopairs").setup()
+		end,
+	},
+  { 
+    "cljoly/telescope-repo.nvim",
+    config = function()
+      require("telescope").load_extension("repo")
+    end,
+  },
+  {
+    "akinsho/toggleterm.nvim",
+    version = "*",
+    opts = {
+    },
+    config = function()
+      require("toggleterm").setup({
+        size = vim.o.columns * 0.4,
+        open_mapping = [[<C-Space>]],
+        direction = 'float',
+      })
+    end,
+  },
 	{ "nvim-treesitter/nvim-treesitter-refactor" },
 	{ "nvim-treesitter/nvim-treesitter-textobjects" },
 	{ "HiPhish/rainbow-delimiters.nvim" },
@@ -113,98 +138,23 @@ require("lazy").setup({
 	{ "hrsh7th/cmp-cmdline" },
 	{ "hrsh7th/nvim-cmp" },
 	{ "onsails/lspkind.nvim" },
-	{
-		"windwp/nvim-autopairs",
-		config = function()
-			require("nvim-autopairs").setup()
-		end,
-	},
 	{ "nvim-tree/nvim-web-devicons" },
 	{ "nvim-lua/plenary.nvim" },
 	{
 		"nvim-telescope/telescope-fzf-native.nvim",
 		build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
 	},
-	{ "cljoly/telescope-repo.nvim" },
-	{ "jvgrootveld/telescope-zoxide" },
-	{ "AckslD/nvim-neoclip.lua" },
-	{ "debugloop/telescope-undo.nvim" },
-
-	{
-		"nvim-telescope/telescope-frecency.nvim",
-		config = function()
-			require("telescope").load_extension("frecency")
-		end,
-	},
-
-	{
-		"nvim-telescope/telescope-project.nvim",
-		config = function()
-			require("telescope").load_extension("project")
-		end,
-	},
-
-	{
-		"akinsho/flutter-tools.nvim",
-		lazy = false,
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"stevearc/dressing.nvim", -- optional for vim.ui.select
-		},
-		config = true,
-	},
+  {"airblade/vim-rooter"},
 	{
 		"folke/lazydev.nvim",
 		ft = "lua", -- only load on lua files
 		opts = {
 			library = {
-				-- See the configuration section for more details
-				-- Load luvit types when the `vim.uv` word is found
 				{ path = "luvit-meta/library", words = { "vim%.uv" } },
 			},
 		},
 	},
 	{ "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
-	{
-		"sainnhe/sonokai",
-		lazy = false, -- ensure it loads immediately
-		priority = 1000, -- make it load before other plugins
-		-- config = function()
-		-- 	vim.cmd("colorscheme sonokai")
-		-- end,
-	},
-	{
-		{
-			"akinsho/toggleterm.nvim",
-			version = "*",
-			opts = {--[[ things you want to change go here]]
-			},
-			config = function()
-				require("toggleterm").setup({
-					size = vim.o.columns * 0.4,
-					open_mapping = [[<C-Space>]],
-					hide_numbers = true,
-					shade_filetypes = {},
-					shade_terminals = true,
-					shading_factor = 2,
-					start_in_insert = true,
-					insert_mappings = true,
-					persist_size = true,
-					direction = "vertical",
-					close_on_exit = true,
-					shell = vim.o.shell,
-					float_opts = {
-						border = "curved",
-						winblend = 0,
-						highlights = {
-							border = "Normal",
-							background = "Normal",
-						},
-					},
-				})
-			end,
-		},
-	},
 	{
 		"ggandor/leap.nvim",
 		config = function()
@@ -332,37 +282,6 @@ require("lazy").setup({
 		config = function()
 			require("nvim-surround").setup({
 				-- Configuration here, or leave empty to use defaults
-			})
-		end,
-	},
-	{
-		"renerocksai/telekasten.nvim",
-		dependencies = { "nvim-telescope/telescope.nvim" },
-		config = function()
-			require("telekasten").setup({
-				home = vim.fn.expand("~/zettelkasten"), -- Put the name of your notes directory here
-			})
-		end,
-	},
-	{
-		"epwalsh/obsidian.nvim",
-		tag = "*", -- recommended, use latest release instead of latest commit
-		requires = {
-			-- Required.
-			"nvim-lua/plenary.nvim",
-
-			-- see below for full list of optional dependencies 👇
-		},
-		config = function()
-			require("obsidian").setup({
-				workspaces = {
-					{
-						name = "personal",
-						path = "~/nots",
-					},
-				},
-
-				-- see below for full list of options 👇
 			})
 		end,
 	},

@@ -3,24 +3,43 @@ vim.g.mapleader = " "
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = false }
 
-vim.api.nvim_set_keymap("i", "<A-h>", 'copilot#Accept("<CR>") . "<Esc>"', { expr = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>z", "<cmd>ZenMode<CR>", { noremap = true, silent = true })
+map("i", "<A-h>", 'copilot#Accept("<CR>") . "<Esc>"', { expr = true, silent = true })
 
-vim.api.nvim_set_keymap("n", "<leader>e", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
+map("n", "<leader>z", "<cmd>ZenMode<CR>", { noremap = true, silent = true })
+map("n", "<leader>e", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
+map("n", "<leader>o", ":w<CR>", { noremap = true, silent = true })
+map("n", "<Tab>", ":lua  RunCodeOnFiletype()<CR>", { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap("n", "<leader>o", ":w<CR>", { noremap = true, silent = true })
-
-vim.api.nvim_set_keymap("n", "<C-h>", "<C-w>h", opts)
-vim.api.nvim_set_keymap("n", "<C-j>", "<C-w>j", opts)
-vim.api.nvim_set_keymap("n", "<C-k>", "<C-w>k", opts)
-vim.api.nvim_set_keymap("n", "<C-l>", "<C-w>l", opts)
-vim.api.nvim_set_keymap("n", "<C-v>", ":vsplit<CR>", opts)
+map("n", "<C-h>", "<C-w>h", opts)
+map("n", "<C-j>", "<C-w>j", opts)
+map("n", "<C-k>", "<C-w>k", opts)
+map("n", "<C-l>", "<C-w>l", opts)
+map("n", "<C-v>", ":vsplit<CR>", opts)
 
 map("n", "tn", "<cmd>bnext<CR>", opts)
 map("n", "th", "<cmd>bprev<CR>", opts)
 map("n", "td", "<cmd>bd<CR>", opts)
+map("n", "ta", [[:lua CloseOtherBuffers()<CR>]], { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap("n", "ta", [[:lua CloseOtherBuffers()<CR>]], { noremap = true, silent = true })
+map("n", "<leader>t", "<cmd>Telescope<CR>", opts) -- Direct Telescope command
+map("n", "<leader>u", "<cmd>Telescope find_files<CR>", opts) -- Find files
+map("n", "<leader>g", "<cmd>Telescope live_grep<CR>", opts) -- Live grep
+map("n", "<leader>a", "<cmd>Telescope oldfiles<CR>", opts) -- Recently opened files
+map("n", "<leader>r", "<cmd>Telescope repo cached_list<CR>", opts) -- open repo list
+map("n", "<leader>k", "<cmd>Telescope keymaps<CR>", opts) -- Keymaps
+map("n", "<leader>r", [[:lua  Telescop_repos()<CR>]], opts)
+
+map("n", "<leader>ld", "<cmd>Telescope lsp_definitions<CR>", opts)
+map("n", "<leader>lR", "<cmd>Telescope lsp_references<CR>", opts)
+map("n", "<leader>li", "<cmd>Telescope lsp_implementations<CR>", opts)
+map("n", "<leader>lt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
+map("n", "<leader>la", "<cmd>Telescope lsp_code_actions<CR>", opts)
+map("n", "<leader>lD", "<cmd>Telescope diagnostics<CR>", opts)
+
+function Telescop_repos()
+  require('telescope').extensions.repo.cached_list{file_ignore_patterns={"^" .. vim.env.HOME .. "/%.cache/", "^" .. vim.env.HOME .. "/%.cargo/",  "^" .. vim.env.HOME .. "/.local/"}}
+end
+
 function CloseOtherBuffers()
 	local current_buf = vim.api.nvim_get_current_buf()
 	local buffers = vim.api.nvim_list_bufs()
@@ -31,24 +50,6 @@ function CloseOtherBuffers()
 		end
 	end
 end
-
--- Direct Telescope access with 't'
-map("n", "<leader>t", "<cmd>Telescope<CR>", opts) -- Direct Telescope command
-
-map("n", "<leader>u", "<cmd>Telescope find_files<CR>", opts) -- Find files
-
-map("n", "<leader>g", "<cmd>Telescope live_grep<CR>", opts) -- Live grep
-map("n", "<leader>a", "<cmd>Telescope oldfiles<CR>", opts) -- Recently opened files
-map("n", "<leader>r", "<cmd>Telescope repo list=fd<CR>", opts) -- open repo list
-map("n", "<leader>k", "<cmd>Telescope keymaps<CR>", opts) -- Keymaps
-
--- LSP related operations
-map("n", "<leader>ld", "<cmd>Telescope lsp_definitions<CR>", opts)
-map("n", "<leader>lR", "<cmd>Telescope lsp_references<CR>", opts)
-map("n", "<leader>li", "<cmd>Telescope lsp_implementations<CR>", opts)
-map("n", "<leader>lt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
-map("n", "<leader>la", "<cmd>Telescope lsp_code_actions<CR>", opts)
-map("n", "<leader>lD", "<cmd>Telescope diagnostics<CR>", opts)
 
 local function get_run_command(filetype)
 	if filetype == "typescript" then
@@ -71,8 +72,6 @@ local function get_run_command(filetype)
 		return ":!echo & cat %"
 	end
 end
-
-vim.api.nvim_set_keymap("n", "<Tab>", ":lua  RunCodeOnFiletype()<CR>", { noremap = true, silent = true })
 
 function RunCodeOnFiletype()
 	local filetype = vim.bo.filetype
