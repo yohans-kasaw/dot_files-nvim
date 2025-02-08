@@ -25,6 +25,8 @@ vim.opt.smartcase = true
 
 vim.opt.relativenumber = true
 
+vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
+
 local function enable_spell()
 	vim.opt_local.spell = true
 	vim.opt_local.spelllang = { "en_us" } -- Using table for multiple languages

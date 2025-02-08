@@ -7,6 +7,6 @@ require("user.diagnostic")
 require("user.cmp")
 require("user.nvim_tree")
 require("user.keymaps")
-require("user.telescope")
 
 vim.cmd("colorscheme kanagawa")
+

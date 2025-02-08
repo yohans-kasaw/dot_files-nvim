@@ -1,4 +1,4 @@
--- azy loading and installing
+-- lazy loading and installing
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	vim.fn.system({
@@ -123,6 +123,20 @@ require("lazy").setup({
       })
     end,
   },
+	{
+		"ggandor/leap.nvim",
+    dependencies = {
+        {"tpope/vim-repeat"}
+    },
+		config = function()
+
+      local leap = require('leap')
+      leap.opts.safe_labels = {}
+      leap.opts.preview_filter = function() return false end
+
+      vim.keymap.set({'n', 'x', 'o'}, 's', '<Plug>(leap)')
+		end,
+	},
 	{ "nvim-treesitter/nvim-treesitter-refactor" },
 	{ "nvim-treesitter/nvim-treesitter-textobjects" },
 	{ "HiPhish/rainbow-delimiters.nvim" },
@@ -140,10 +154,6 @@ require("lazy").setup({
 	{ "onsails/lspkind.nvim" },
 	{ "nvim-tree/nvim-web-devicons" },
 	{ "nvim-lua/plenary.nvim" },
-	{
-		"nvim-telescope/telescope-fzf-native.nvim",
-		build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
-	},
   {"airblade/vim-rooter"},
 	{
 		"folke/lazydev.nvim",
@@ -155,16 +165,6 @@ require("lazy").setup({
 		},
 	},
 	{ "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
-	{
-		"ggandor/leap.nvim",
-		config = function()
-			require("leap").add_default_mappings()
-			vim.keymap.set("n", "s", "<Plug>(leap)")
-			vim.keymap.set("n", "S", "<Plug>(leap-from-window)")
-			vim.keymap.set({ "x", "o" }, "s", "<Plug>(leap-forward)")
-			vim.keymap.set({ "x", "o" }, "S", "<Plug>(leap-backward)")
-		end,
-	},
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
@@ -187,7 +187,6 @@ require("lazy").setup({
 		"rcarriga/nvim-notify",
 		config = function()
 			require("notify").setup({
-				-- Other configuration options...
 				top_down = false,
 			})
 		end,
@@ -303,7 +302,6 @@ require("lazy").setup({
 		autoStart = true,
 		config = function()
 			vim.g.copilot_assume_mapped = true
-			vim.api.nvim_set_keymap("i", "<A-h>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 			vim.g.copilot_no_tab_map = true
 		end,
 	},

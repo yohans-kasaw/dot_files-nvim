@@ -3,6 +3,7 @@ vim.g.mapleader = " "
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = false }
 
+
 map("i", "<A-h>", 'copilot#Accept("<CR>") . "<Esc>"', { expr = true, silent = true })
 
 map("n", "<leader>z", "<cmd>ZenMode<CR>", { noremap = true, silent = true })
@@ -35,6 +36,15 @@ map("n", "<leader>li", "<cmd>Telescope lsp_implementations<CR>", opts)
 map("n", "<leader>lt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
 map("n", "<leader>la", "<cmd>Telescope lsp_code_actions<CR>", opts)
 map("n", "<leader>lD", "<cmd>Telescope diagnostics<CR>", opts)
+
+-- leap for reamote and increamental
+vim.keymap.set({'n', 'x', 'o'}, 'ga',  function ()
+  require('leap.treesitter').select()
+end)
+
+vim.keymap.set({'n', 'x', 'o'}, 'gs', function ()
+  require('leap.remote').action()
+end)
 
 function Telescop_repos()
   require('telescope').extensions.repo.cached_list{file_ignore_patterns={"^" .. vim.env.HOME .. "/%.cache/", "^" .. vim.env.HOME .. "/%.cargo/",  "^" .. vim.env.HOME .. "/.local/"}}
@@ -78,3 +88,4 @@ function RunCodeOnFiletype()
 	local cmd = get_run_command(filetype)
 	vim.api.nvim_command(cmd)
 end
+
