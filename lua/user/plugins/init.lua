@@ -14,6 +14,96 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	{
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		opts = {
+			top_down = false,
+		},
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+			"rcarriga/nvim-notify",
+		},
+	},
+	{
+		"github/copilot.vim",
+		event = "InsertEnter",
+		lazy = false,
+		autoStart = true,
+		config = function()
+			vim.g.copilot_assume_mapped = true
+			vim.g.copilot_no_tab_map = true
+		end,
+	},
+	{ "nvim-treesitter/nvim-treesitter-refactor" },
+	{ "nvim-treesitter/nvim-treesitter-textobjects" },
+	{ "HiPhish/rainbow-delimiters.nvim" },
+	{ "folke/twilight.nvim" },
+	{ "neovim/nvim-lspconfig" },
+	{ "nvim-tree/nvim-tree.lua" },
+	{ "folke/zen-mode.nvim" },
+
+	-- this are for complitions
+	{ "hrsh7th/cmp-nvim-lsp" },
+	{ "hrsh7th/cmp-buffer" },
+	{ "hrsh7th/cmp-path" },
+	{ "hrsh7th/cmp-cmdline" },
+	{ "hrsh7th/nvim-cmp" },
+	{ "onsails/lspkind.nvim" },
+	{ "nvim-tree/nvim-web-devicons" },
+	{ "nvim-lua/plenary.nvim" },
+  {"airblade/vim-rooter"},
+	{
+		"folke/lazydev.nvim",
+		ft = "lua", -- only load on lua files
+		opts = {
+			library = {
+				{ path = "luvit-meta/library", words = { "vim%.uv" } },
+			},
+		},
+	},
+	{ "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
+	{
+		"lukas-reineke/indent-blankline.nvim",
+		main = "ibl",
+		---@module "ibl"
+		---@type ibl.config
+		opts = {},
+	},
+	{
+		"luckasRanarison/tailwind-tools.nvim",
+		name = "tailwind-tools",
+		build = ":UpdateRemotePlugins",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-telescope/telescope.nvim", -- optional
+			"neovim/nvim-lspconfig", -- optional
+		},
+		opts = {}, -- your configuration
+	},
+	{
+		"m4xshen/hardtime.nvim",
+		dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+		opts = {
+			showmode = true,
+			max_count = 10,
+			disable_mouse = true,
+			hint = true,
+		},
+	},
+	{ "ThePrimeagen/vim-be-good" },
+	{
+		"utilyre/barbecue.nvim",
+		name = "barbecue",
+		version = "*",
+		dependencies = {
+			"SmiteshP/nvim-navic",
+			"nvim-tree/nvim-web-devicons", -- optional dependency
+		},
+		opts = {
+			-- configurations go here
+		},
+	},
+	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
 		-- lazy = true,
@@ -191,95 +281,5 @@ require("lazy").setup({
 			require("nvim-surround").setup({
 			})
 		end,
-	},
-	{
-		"folke/noice.nvim",
-		event = "VeryLazy",
-		opts = {
-			top_down = false,
-		},
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-			"rcarriga/nvim-notify",
-		},
-	},
-	{
-		"github/copilot.vim",
-		event = "InsertEnter",
-		lazy = false,
-		autoStart = true,
-		config = function()
-			vim.g.copilot_assume_mapped = true
-			vim.g.copilot_no_tab_map = true
-		end,
-	},
-	{ "nvim-treesitter/nvim-treesitter-refactor" },
-	{ "nvim-treesitter/nvim-treesitter-textobjects" },
-	{ "HiPhish/rainbow-delimiters.nvim" },
-	{ "folke/twilight.nvim" },
-	{ "neovim/nvim-lspconfig" },
-	{ "nvim-tree/nvim-tree.lua" },
-	{ "folke/zen-mode.nvim" },
-
-	-- this are for complitions
-	{ "hrsh7th/cmp-nvim-lsp" },
-	{ "hrsh7th/cmp-buffer" },
-	{ "hrsh7th/cmp-path" },
-	{ "hrsh7th/cmp-cmdline" },
-	{ "hrsh7th/nvim-cmp" },
-	{ "onsails/lspkind.nvim" },
-	{ "nvim-tree/nvim-web-devicons" },
-	{ "nvim-lua/plenary.nvim" },
-  {"airblade/vim-rooter"},
-	{
-		"folke/lazydev.nvim",
-		ft = "lua", -- only load on lua files
-		opts = {
-			library = {
-				{ path = "luvit-meta/library", words = { "vim%.uv" } },
-			},
-		},
-	},
-	{ "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		main = "ibl",
-		---@module "ibl"
-		---@type ibl.config
-		opts = {},
-	},
-	{
-		"luckasRanarison/tailwind-tools.nvim",
-		name = "tailwind-tools",
-		build = ":UpdateRemotePlugins",
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-			"nvim-telescope/telescope.nvim", -- optional
-			"neovim/nvim-lspconfig", -- optional
-		},
-		opts = {}, -- your configuration
-	},
-	{
-		"m4xshen/hardtime.nvim",
-		dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-		opts = {
-			showmode = true,
-			max_count = 10,
-			disable_mouse = true,
-			hint = true,
-		},
-	},
-	{ "ThePrimeagen/vim-be-good" },
-	{
-		"utilyre/barbecue.nvim",
-		name = "barbecue",
-		version = "*",
-		dependencies = {
-			"SmiteshP/nvim-navic",
-			"nvim-tree/nvim-web-devicons", -- optional dependency
-		},
-		opts = {
-			-- configurations go here
-		},
 	},
 })

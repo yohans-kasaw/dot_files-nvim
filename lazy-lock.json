@@ -7,6 +7,7 @@
   "copilot.vim": { "branch": "release", "commit": "87038123804796ca7af20d1b71c3428d858a9124" },
   "github-nvim-theme": { "branch": "main", "commit": "c106c9472154d6b2c74b74565616b877ae8ed31d" },
   "gitsigns.nvim": { "branch": "main", "commit": "f9170c3b74d94525201e5a40543d8924a2a883a7" },
+  "gp.nvim": { "branch": "main", "commit": "2372d5323c6feaa2e9c19f7ccb537c615d878e18" },
   "hardtime.nvim": { "branch": "main", "commit": "5d9adcbe2f12741de79e435c8b85dca69a3b22e4" },
   "indent-blankline.nvim": { "branch": "master", "commit": "e10626f7fcd51ccd56d7ffc00883ba7e0aa28f78" },
   "kanagawa.nvim": { "branch": "master", "commit": "988082eb00b845e4afbcaa4fd8e903da8a3ab3b9" },
