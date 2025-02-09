@@ -37,6 +37,13 @@ map("n", "<leader>lt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
 map("n", "<leader>la", "<cmd>Telescope lsp_code_actions<CR>", opts)
 map("n", "<leader>lD", "<cmd>Telescope diagnostics<CR>", opts)
 
+-- this is for hlslens
+map("n","n",[[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]], opts)
+map(
+  "n","N",[[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]], opts)
+map("n", "*", [[*<Cmd>lua require('hlslens').start()<CR>]], opts)
+vim.api.nvim_set_keymap("n", "<C-n>", "<Cmd>noh<CR>", opts)
+
 -- leap for reamote and increamental
 vim.keymap.set({'n', 'x', 'o'}, 'ga',  function ()
   require('leap.treesitter').select()

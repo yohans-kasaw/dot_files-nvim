@@ -137,6 +137,82 @@ require("lazy").setup({
       vim.keymap.set({'n', 'x', 'o'}, 's', '<Plug>(leap)')
 		end,
 	},
+	{
+		"rcarriga/nvim-notify",
+		config = function()
+			require("notify").setup({
+				top_down = false,
+			})
+		end,
+	},
+	{
+		"yamatsum/nvim-cursorline",
+		config = function()
+			require("nvim-cursorline").setup({
+				cursorline = {
+					enable = true,
+					timeout = 1000,
+					number = false,
+				},
+				cursorword = {
+					enable = true,
+					min_length = 3,
+					hl = { underline = true },
+				},
+			})
+		end,
+	},
+	{
+		"petertriho/nvim-scrollbar",
+		config = function()
+			require("scrollbar").setup()
+		end,
+	},
+	{
+		"rebelot/kanagawa.nvim",
+		config = function()
+			require("kanagawa").setup({
+				theme = "dragon",
+			})
+		end,
+	},
+	{
+		"kevinhwang91/nvim-hlslens",
+		config = function()
+			require("scrollbar.handlers.search").setup({
+			})
+		end,
+	},
+	{
+		"kylechui/nvim-surround",
+		version = "*", -- Use for stability; omit to use `main` branch for the latest features
+		event = "VeryLazy",
+		config = function()
+			require("nvim-surround").setup({
+			})
+		end,
+	},
+	{
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		opts = {
+			top_down = false,
+		},
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+			"rcarriga/nvim-notify",
+		},
+	},
+	{
+		"github/copilot.vim",
+		event = "InsertEnter",
+		lazy = false,
+		autoStart = true,
+		config = function()
+			vim.g.copilot_assume_mapped = true
+			vim.g.copilot_no_tab_map = true
+		end,
+	},
 	{ "nvim-treesitter/nvim-treesitter-refactor" },
 	{ "nvim-treesitter/nvim-treesitter-textobjects" },
 	{ "HiPhish/rainbow-delimiters.nvim" },
@@ -184,41 +260,16 @@ require("lazy").setup({
 		opts = {}, -- your configuration
 	},
 	{
-		"rcarriga/nvim-notify",
-		config = function()
-			require("notify").setup({
-				top_down = false,
-			})
-		end,
-	},
-	{
 		"m4xshen/hardtime.nvim",
 		dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
 		opts = {
 			showmode = true,
 			max_count = 10,
-			disable_mouse = false,
-			hint = false,
+			disable_mouse = true,
+			hint = true,
 		},
 	},
 	{ "ThePrimeagen/vim-be-good" },
-	{
-		"yamatsum/nvim-cursorline",
-		config = function()
-			require("nvim-cursorline").setup({
-				cursorline = {
-					enable = true,
-					timeout = 1000,
-					number = false,
-				},
-				cursorword = {
-					enable = true,
-					min_length = 3,
-					hl = { underline = true },
-				},
-			})
-		end,
-	},
 	{
 		"utilyre/barbecue.nvim",
 		name = "barbecue",
@@ -230,79 +281,5 @@ require("lazy").setup({
 		opts = {
 			-- configurations go here
 		},
-	},
-	{
-		"petertriho/nvim-scrollbar",
-		config = function()
-			require("scrollbar").setup()
-		end,
-	},
-	{
-		"kevinhwang91/nvim-hlslens",
-		config = function()
-			-- require("hlslens").setup({})
-			require("scrollbar.handlers.search").setup({
-				-- hlslens config overrides
-			})
-			local kopts = { noremap = true, silent = true }
-
-			vim.api.nvim_set_keymap(
-				"n",
-				"n",
-				[[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
-				kopts
-			)
-			vim.api.nvim_set_keymap(
-				"n",
-				"N",
-				[[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
-				kopts
-			)
-			vim.api.nvim_set_keymap("n", "*", [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
-			vim.api.nvim_set_keymap("n", "#", [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
-			vim.api.nvim_set_keymap("n", "g*", [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
-			vim.api.nvim_set_keymap("n", "g#", [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
-
-			vim.api.nvim_set_keymap("n", "<C-n>", "<Cmd>noh<CR>", kopts)
-		end,
-	},
-	{
-		"rebelot/kanagawa.nvim",
-		config = function()
-			require("kanagawa").setup({
-				theme = "dragon",
-			})
-		end,
-	},
-	{
-		"kylechui/nvim-surround",
-		version = "*", -- Use for stability; omit to use `main` branch for the latest features
-		event = "VeryLazy",
-		config = function()
-			require("nvim-surround").setup({
-				-- Configuration here, or leave empty to use defaults
-			})
-		end,
-	},
-	{
-		"folke/noice.nvim",
-		event = "VeryLazy",
-		opts = {
-			top_down = false,
-		},
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-			"rcarriga/nvim-notify",
-		},
-	},
-	{
-		"github/copilot.vim",
-		event = "InsertEnter",
-		lazy = false,
-		autoStart = true,
-		config = function()
-			vim.g.copilot_assume_mapped = true
-			vim.g.copilot_no_tab_map = true
-		end,
 	},
 })
