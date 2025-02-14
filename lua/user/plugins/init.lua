@@ -24,16 +24,16 @@ require("lazy").setup({
 			"rcarriga/nvim-notify",
 		},
 	},
-	{
-		"github/copilot.vim",
-		event = "InsertEnter",
-		lazy = false,
-		autoStart = true,
-		config = function()
-			vim.g.copilot_assume_mapped = true
-			vim.g.copilot_no_tab_map = true
-		end,
-	},
+	-- {
+	-- 	"github/copilot.vim",
+	-- 	event = "InsertEnter",
+	-- 	lazy = false,
+	-- 	autoStart = true,
+	-- 	config = function()
+	-- 		vim.g.copilot_assume_mapped = true
+	-- 		vim.g.copilot_no_tab_map = true
+	-- 	end,
+	-- },
 	{ "nvim-treesitter/nvim-treesitter-refactor" },
 	{ "nvim-treesitter/nvim-treesitter-textobjects" },
 	{ "HiPhish/rainbow-delimiters.nvim" },
@@ -282,4 +282,32 @@ require("lazy").setup({
 			})
 		end,
 	},
+  {
+    "olimorris/codecompanion.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = function ()
+      require("codecompanion").setup({
+          strategies = {
+            chat = {
+
+            },
+            inline = {
+
+            }
+          },
+      })
+    end
+  },
+  {
+    "williamboman/mason.nvim",
+  },
+  {
+    "williamboman/mason-lspconfig.nvim",
+  },
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+  }
 })

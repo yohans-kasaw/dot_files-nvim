@@ -26,6 +26,9 @@ local source_menu_icons = {
 	buffer = "[Buffer]",
 	path = "[Path]",
 	cmdline = "[Cmd]",
+  lazydev = "[LazyDev]",
+  treesitter = "[TS]",
+  codecompanion = "[CodeCompanion]",
 }
 
 -- Window configuration
@@ -104,6 +107,7 @@ cmp.setup({
 		{ name = "cmdline" },
 		{ name = "lazydev", group_index = 0 },
 		{ name = "treesitter" },
+    { name = "codecompanion"},
 	}),
 })
 

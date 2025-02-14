@@ -4,7 +4,12 @@ local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = false }
 
 
-map("i", "<A-h>", 'copilot#Accept("<CR>") . "<Esc>"', { expr = true, silent = true })
+-- map("i", "<A-h>", 'copilot#Accept("<CR>") . "<Esc>"', { expr = true, silent = true })
+
+
+vim.keymap.set('n', '<leader>f', ':lua vim.lsp.buf.format({name = "null-ls"})<CR>', {})
+
+map("n", "gl", "<cmd>lua show_diagnostics()<CR>", { noremap = true, silent = true })
 
 map("n", "<leader>z", "<cmd>ZenMode<CR>", { noremap = true, silent = true })
 map("n", "<leader>e", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
@@ -94,5 +99,9 @@ function RunCodeOnFiletype()
 	local filetype = vim.bo.filetype
 	local cmd = get_run_command(filetype)
 	vim.api.nvim_command(cmd)
+end
+
+function show_diagnostics()
+	vim.diagnostic.open_float(nil, {})
 end
 
