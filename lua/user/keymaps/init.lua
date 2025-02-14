@@ -3,11 +3,7 @@ vim.g.mapleader = " "
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = false }
 
-
 -- map("i", "<A-h>", 'copilot#Accept("<CR>") . "<Esc>"', { expr = true, silent = true })
-
-
-vim.keymap.set('n', '<leader>f', ':lua vim.lsp.buf.format({name = "null-ls"})<CR>', {})
 
 map("n", "gl", "<cmd>lua show_diagnostics()<CR>", { noremap = true, silent = true })
 
@@ -43,23 +39,28 @@ map("n", "<leader>la", "<cmd>Telescope lsp_code_actions<CR>", opts)
 map("n", "<leader>lD", "<cmd>Telescope diagnostics<CR>", opts)
 
 -- this is for hlslens
-map("n","n",[[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]], opts)
-map(
-  "n","N",[[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]], opts)
+map("n", "n", [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]], opts)
+map("n", "N", [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]], opts)
 map("n", "*", [[*<Cmd>lua require('hlslens').start()<CR>]], opts)
 vim.api.nvim_set_keymap("n", "<C-n>", "<Cmd>noh<CR>", opts)
 
 -- leap for reamote and increamental
-vim.keymap.set({'n', 'x', 'o'}, 'ga',  function ()
-  require('leap.treesitter').select()
+vim.keymap.set({ "n", "x", "o" }, "ga", function()
+	require("leap.treesitter").select()
 end)
 
-vim.keymap.set({'n', 'x', 'o'}, 'gs', function ()
-  require('leap.remote').action()
+vim.keymap.set({ "n", "x", "o" }, "gs", function()
+	require("leap.remote").action()
 end)
 
 function Telescop_repos()
-  require('telescope').extensions.repo.cached_list{file_ignore_patterns={"^" .. vim.env.HOME .. "/%.cache/", "^" .. vim.env.HOME .. "/%.cargo/",  "^" .. vim.env.HOME .. "/.local/"}}
+	require("telescope").extensions.repo.cached_list({
+		file_ignore_patterns = {
+			"^" .. vim.env.HOME .. "/%.cache/",
+			"^" .. vim.env.HOME .. "/%.cargo/",
+			"^" .. vim.env.HOME .. "/.local/",
+		},
+	})
 end
 
 function CloseOtherBuffers()
@@ -104,4 +105,3 @@ end
 function show_diagnostics()
 	vim.diagnostic.open_float(nil, {})
 end
-

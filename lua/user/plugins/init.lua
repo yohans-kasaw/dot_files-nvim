@@ -51,7 +51,7 @@ require("lazy").setup({
 	{ "onsails/lspkind.nvim" },
 	{ "nvim-tree/nvim-web-devicons" },
 	{ "nvim-lua/plenary.nvim" },
-  {"airblade/vim-rooter"},
+	{ "airblade/vim-rooter" },
 	{
 		"folke/lazydev.nvim",
 		ft = "lua", -- only load on lua files
@@ -118,8 +118,8 @@ require("lazy").setup({
 		config = function()
 			local configs = require("nvim-treesitter.configs")
 			configs.setup({
-        modules = {},
-        ignore_install = {},
+				modules = {},
+				ignore_install = {},
 				ensure_installed = "all",
 				sync_install = true,
 				auto_install = true,
@@ -194,37 +194,37 @@ require("lazy").setup({
 			require("nvim-autopairs").setup()
 		end,
 	},
-  { 
-    "cljoly/telescope-repo.nvim",
-    config = function()
-      require("telescope").load_extension("repo")
-    end,
-  },
-  {
-    "akinsho/toggleterm.nvim",
-    version = "*",
-    opts = {
-    },
-    config = function()
-      require("toggleterm").setup({
-        size = vim.o.columns * 0.4,
-        open_mapping = [[<C-Space>]],
-        direction = 'float',
-      })
-    end,
-  },
+	{
+		"cljoly/telescope-repo.nvim",
+		config = function()
+			require("telescope").load_extension("repo")
+		end,
+	},
+	{
+		"akinsho/toggleterm.nvim",
+		version = "*",
+		opts = {},
+		config = function()
+			require("toggleterm").setup({
+				size = vim.o.columns * 0.4,
+				open_mapping = [[<C-Space>]],
+				direction = "float",
+			})
+		end,
+	},
 	{
 		"ggandor/leap.nvim",
-    dependencies = {
-        {"tpope/vim-repeat"}
-    },
+		dependencies = {
+			{ "tpope/vim-repeat" },
+		},
 		config = function()
+			local leap = require("leap")
+			leap.opts.safe_labels = {}
+			leap.opts.preview_filter = function()
+				return false
+			end
 
-      local leap = require('leap')
-      leap.opts.safe_labels = {}
-      leap.opts.preview_filter = function() return false end
-
-      vim.keymap.set({'n', 'x', 'o'}, 's', '<Plug>(leap)')
+			vim.keymap.set({ "n", "x", "o" }, "s", "<Plug>(leap)")
 		end,
 	},
 	{
@@ -269,8 +269,7 @@ require("lazy").setup({
 	{
 		"kevinhwang91/nvim-hlslens",
 		config = function()
-			require("scrollbar.handlers.search").setup({
-			})
+			require("scrollbar.handlers.search").setup({})
 		end,
 	},
 	{
@@ -278,36 +277,52 @@ require("lazy").setup({
 		version = "*", -- Use for stability; omit to use `main` branch for the latest features
 		event = "VeryLazy",
 		config = function()
-			require("nvim-surround").setup({
+			require("nvim-surround").setup({})
+		end,
+	},
+	{
+		"olimorris/codecompanion.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		config = function()
+			require("codecompanion").setup({
+				strategies = {
+					chat = {},
+					inline = {},
+				},
 			})
 		end,
 	},
-  {
-    "olimorris/codecompanion.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-    },
-    config = function ()
-      require("codecompanion").setup({
-          strategies = {
-            chat = {
-
-            },
-            inline = {
-
-            }
-          },
-      })
-    end
-  },
-  {
-    "williamboman/mason.nvim",
-  },
-  {
-    "williamboman/mason-lspconfig.nvim",
-  },
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-  }
+	{
+		"williamboman/mason.nvim",
+	},
+	{
+		"williamboman/mason-lspconfig.nvim",
+	},
+	{
+		"stevearc/conform.nvim",
+		opts = {},
+		cmd = { "ConformInfo" },
+		lazy = true,
+	},
+	{
+		"supermaven-inc/supermaven-nvim",
+		config = function()
+			require("supermaven-nvim").setup({
+				keymaps = {
+					accept_suggestion = "<A-h>",
+					clear_suggestion = "<A-c>",
+					accept_word = "<A-n>",
+				},
+				color = {
+					-- suggestion_color = "#ffffff",
+					-- cterm = 244,
+				},
+				disable_inline_completion = false, -- disables inline completion for use with cmp
+				disable_keymaps = false, -- disables built in keymaps for more manual control
+			})
+		end,
+	},
 })

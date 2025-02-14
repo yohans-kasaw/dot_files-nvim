@@ -7,6 +7,7 @@ require("user.diagnostic")
 require("user.cmp")
 require("user.nvim_tree")
 require("user.keymaps")
+require("user.conform")
 
 vim.cmd("colorscheme kanagawa")
 
@@ -17,3 +18,4 @@ vim.cmd [[
   highlight Normal ctermbg=none
   highlight NonText ctermbg=none
 ]]
+
