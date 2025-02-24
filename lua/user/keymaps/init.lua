@@ -92,7 +92,7 @@ local function get_run_command(filetype)
 	elseif filetype == "dart" then
 		return ":! echo && cat test | dart %"
 	else
-		return ":!echo & cat %"
+		return ""
 	end
 end
 

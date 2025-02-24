@@ -1,9 +1,11 @@
 vim.opt.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
 
 vim.opt.showtabline = 4
+
 vim.opt.expandtab = true
-vim.opt.smartindent = true
-vim.opt.autoindent = true
+
+vim.opt.smartindent = false 
+vim.opt.autoindent = false 
 vim.opt.copyindent = true
 
 

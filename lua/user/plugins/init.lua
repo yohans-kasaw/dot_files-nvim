@@ -78,7 +78,6 @@ require("lazy").setup({
 			"nvim-telescope/telescope.nvim", -- optional
 			"neovim/nvim-lspconfig", -- optional
 		},
-		opts = {}, -- your configuration
 	},
 	{
 		"m4xshen/hardtime.nvim",
@@ -316,12 +315,19 @@ require("lazy").setup({
 					clear_suggestion = "<A-c>",
 					accept_word = "<A-n>",
 				},
-				color = {
-					-- suggestion_color = "#ffffff",
-					-- cterm = 244,
+				ignore_filetypes = {
+					"TelescopePrompt",
+					"NvimTree",
+					"neo-tree",
+					"notify",
+					"quickfix",
+					"prompt",
+					"text",
+					"markdown",
+					"md",
 				},
-				disable_inline_completion = false, -- disables inline completion for use with cmp
-				disable_keymaps = false, -- disables built in keymaps for more manual control
+				disable_inline_completion = false,
+				disable_keymaps = false,
 			})
 		end,
 	},

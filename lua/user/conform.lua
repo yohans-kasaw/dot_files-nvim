@@ -11,7 +11,6 @@ require("conform").setup({
 		html = { "prettier" },
 		json = { "prettier" },
 		yaml = { "prettier" },
-		markdown = { "prettier" },
 		vue = { "prettier" },
 	},
 })
