@@ -232,7 +232,7 @@ require("lazy").setup({
 		config = function()
 			require("notify").setup({
 				top_down = false,
-        background_colour = "#000000",
+				background_colour = "#000000",
 			})
 		end,
 	},
@@ -304,9 +304,8 @@ require("lazy").setup({
 	},
 	{
 		"stevearc/conform.nvim",
-		opts = {},
 		cmd = { "ConformInfo" },
-		lazy = true,
+		lazy = false,
 	},
 	{
 		"supermaven-inc/supermaven-nvim",
@@ -326,14 +325,15 @@ require("lazy").setup({
 			})
 		end,
 	},
-	{ "catppuccin/nvim", 
-    name = "catppuccin", 
-    priority = 1000, 
-    config = function()
-      require("catppuccin").setup({
-         transparent_background = true, 
-      })
-    end,
-  },
-  {"tris203/precognition.nvim"},
+	{
+		"catppuccin/nvim",
+		name = "catppuccin",
+		priority = 1000,
+		config = function()
+			require("catppuccin").setup({
+				transparent_background = true,
+			})
+		end,
+	},
+	{ "tris203/precognition.nvim" },
 })
